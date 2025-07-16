@@ -1,6 +1,6 @@
 import Foundation
+import AVFoundation
 import AppKit
-import TagLibKit
 
 struct Track: Identifiable, Equatable {
     let id = UUID()
@@ -8,17 +8,37 @@ struct Track: Identifiable, Equatable {
     let artist: String?
     let audioURL: URL
     let artwork: NSImage?
-
+    
+    // Use a static async factory method for modern metadata loading
     static func from(url: URL) async -> Track {
-        let tagInfo = TagLibKit.TaglibWrapper.tags(forFile: url.path)
-        let title = tagInfo["TITLE"] as? String ?? url.deletingPathExtension().lastPathComponent
-        let artist = tagInfo["ARTIST"] as? String
-
+        let asset = AVURLAsset(url: url)
+        var title: String = url.deletingPathExtension().lastPathComponent
+        var artist: String? = nil
         var artwork: NSImage? = nil
-        if let imageData = TagLibKit.TaglibWrapper.artwork(forFile: url.path) {
-            artwork = NSImage(data: imageData)
+        
+        do {
+            let metadata = try await asset.load(.commonMetadata)
+            for meta in metadata {
+                if meta.commonKey?.rawValue == "title" {
+                    if let value = try? await meta.load(.value) as? String {
+                        title = value
+                    }
+                }
+                if meta.commonKey?.rawValue == "artist" {
+                    if let value = try? await meta.load(.value) as? String {
+                        artist = value
+                    }
+                }
+                if meta.commonKey?.rawValue == "artwork" {
+                    if let data = try? await meta.load(.value) as? Data,
+                       let image = NSImage(data: data) {
+                        artwork = image
+                    }
+                }
+            }
+        } catch {
+            // Fallback to filename and nils if metadata fails
         }
-
         return Track(title: title, artist: artist, audioURL: url, artwork: artwork)
     }
 }
