@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4786F7112E2779E4000395A4 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F7102E2779E2000395A4 /* LibraryViewModel.swift */; };
+		4786F7132E277A0A000395A4 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F7122E277A09000395A4 /* Playlist.swift */; };
+		4786F7152E277A25000395A4 /* SongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F7142E277A24000395A4 /* SongListView.swift */; };
+		4786F7172E277A4B000395A4 /* PlaylistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F7162E277A4A000395A4 /* PlaylistListView.swift */; };
+		4786F7192E277A66000395A4 /* ArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F7182E277A64000395A4 /* ArtistListView.swift */; };
+		4786F71B2E277A77000395A4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F71A2E277A77000395A4 /* SettingsView.swift */; };
+		4786F71D2E277A97000395A4 /* PlayerBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786F71C2E277A96000395A4 /* PlayerBarView.swift */; };
+		4786F7202E27849D000395A4 /* TagLib in Frameworks */ = {isa = PBXBuildFile; productRef = 4786F71F2E27849D000395A4 /* TagLib */; };
+		4786F7232E278836000395A4 /* SwiftTagLib in Frameworks */ = {isa = PBXBuildFile; productRef = 4786F7222E278836000395A4 /* SwiftTagLib */; };
 		47E8F4302E2697E400A2913E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47E8F42B2E2697E400A2913E /* Assets.xcassets */; };
 		47E8F4312E2697E400A2913E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E8F42C2E2697E400A2913E /* ContentView.swift */; };
 		47E8F4322E2697E400A2913E /* DjangoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E8F42E2E2697E400A2913E /* DjangoApp.swift */; };
@@ -36,6 +45,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4786F7102E2779E2000395A4 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
+		4786F7122E277A09000395A4 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		4786F7142E277A24000395A4 /* SongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListView.swift; sourceTree = "<group>"; };
+		4786F7162E277A4A000395A4 /* PlaylistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListView.swift; sourceTree = "<group>"; };
+		4786F7182E277A64000395A4 /* ArtistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistListView.swift; sourceTree = "<group>"; };
+		4786F71A2E277A77000395A4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4786F71C2E277A96000395A4 /* PlayerBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerBarView.swift; sourceTree = "<group>"; };
 		47DB000C2E26972B001EC161 /* Django.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Django.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47DB001A2E26972D001EC161 /* DjangoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DjangoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47DB00242E26972D001EC161 /* DjangoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DjangoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +85,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4786F7202E27849D000395A4 /* TagLib in Frameworks */,
+				4786F7232E278836000395A4 /* SwiftTagLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +144,7 @@
 		47E8F4332E2697E800A2913E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4786F7122E277A09000395A4 /* Playlist.swift */,
 				47EB58352E26AEB30006ADB3 /* Lyrics.swift */,
 				47EB58332E26ACE30006ADB3 /* Track.swift */,
 			);
@@ -135,6 +154,11 @@
 		47E8F4342E2697F700A2913E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4786F71C2E277A96000395A4 /* PlayerBarView.swift */,
+				4786F71A2E277A77000395A4 /* SettingsView.swift */,
+				4786F7182E277A64000395A4 /* ArtistListView.swift */,
+				4786F7162E277A4A000395A4 /* PlaylistListView.swift */,
+				4786F7142E277A24000395A4 /* SongListView.swift */,
 				47EB58392E26AF920006ADB3 /* LyricsView.swift */,
 				47E8F42C2E2697E400A2913E /* ContentView.swift */,
 			);
@@ -144,6 +168,7 @@
 		47E8F4352E26980300A2913E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				4786F7102E2779E2000395A4 /* LibraryViewModel.swift */,
 				47EB58372E26AECA0006ADB3 /* LyricsViewModel.swift */,
 				47EB58312E26AC860006ADB3 /* PlayerViewModel.swift */,
 			);
@@ -175,6 +200,8 @@
 			);
 			name = Django;
 			packageProductDependencies = (
+				4786F71F2E27849D000395A4 /* TagLib */,
+				4786F7222E278836000395A4 /* SwiftTagLib */,
 			);
 			productName = Django;
 			productReference = 47DB000C2E26972B001EC161 /* Django.app */;
@@ -258,6 +285,10 @@
 			);
 			mainGroup = 47DB00032E26972B001EC161;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4786F71E2E27849D000395A4 /* XCRemoteSwiftPackageReference "swift-taglib" */,
+				4786F7212E278836000395A4 /* XCRemoteSwiftPackageReference "SwiftTagLib" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 47DB000D2E26972B001EC161 /* Products */;
 			projectDirPath = "";
@@ -304,10 +335,17 @@
 				47EB58382E26AECC0006ADB3 /* LyricsViewModel.swift in Sources */,
 				47EB58342E26ACE70006ADB3 /* Track.swift in Sources */,
 				47EB58322E26AC8A0006ADB3 /* PlayerViewModel.swift in Sources */,
+				4786F71D2E277A97000395A4 /* PlayerBarView.swift in Sources */,
 				47EB583A2E26AF950006ADB3 /* LyricsView.swift in Sources */,
 				47EB58362E26AEB70006ADB3 /* Lyrics.swift in Sources */,
 				47EB58302E26AADB0006ADB3 /* AudioManager.swift in Sources */,
+				4786F71B2E277A77000395A4 /* SettingsView.swift in Sources */,
+				4786F7112E2779E4000395A4 /* LibraryViewModel.swift in Sources */,
+				4786F7152E277A25000395A4 /* SongListView.swift in Sources */,
 				47E8F4322E2697E400A2913E /* DjangoApp.swift in Sources */,
+				4786F7172E277A4B000395A4 /* PlaylistListView.swift in Sources */,
+				4786F7192E277A66000395A4 /* ArtistListView.swift in Sources */,
+				4786F7132E277A0A000395A4 /* Playlist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,6 +693,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4786F71E2E27849D000395A4 /* XCRemoteSwiftPackageReference "swift-taglib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Phisto/swift-taglib";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+		4786F7212E278836000395A4 /* XCRemoteSwiftPackageReference "SwiftTagLib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/0xjorgev/SwiftTagLib";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4786F71F2E27849D000395A4 /* TagLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4786F71E2E27849D000395A4 /* XCRemoteSwiftPackageReference "swift-taglib" */;
+			productName = TagLib;
+		};
+		4786F7222E278836000395A4 /* SwiftTagLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4786F7212E278836000395A4 /* XCRemoteSwiftPackageReference "SwiftTagLib" */;
+			productName = SwiftTagLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47DB00042E26972B001EC161 /* Project object */;
 }

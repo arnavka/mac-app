@@ -2,50 +2,82 @@ import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
 
+enum SidebarItem: String, CaseIterable, Hashable, Identifiable {
+    case songs, playlists, artists, settings
+    var id: Self { self }
+    var label: String {
+        switch self {
+        case .songs: return "Songs"
+        case .playlists: return "Playlists"
+        case .artists: return "Artists"
+        case .settings: return "Settings"
+        }
+    }
+    var systemImage: String {
+        switch self {
+        case .songs: return "music.note"
+        case .playlists: return "music.note.list"
+        case .artists: return "person.2.fill"
+        case .settings: return "gearshape"
+        }
+    }
+}
+
 struct ContentView: View {
     @StateObject var playerVM = PlayerViewModel()
+    @StateObject var libraryVM = LibraryViewModel() // Handles songs, playlists, artists, etc.
     @StateObject var lyricsVM = LyricsViewModel()
 
+    @State private var selection: SidebarItem? = .songs
+
     var body: some View {
-        VStack(spacing: 20) {
-            Text("🎵 FLAC Lyrics Player")
-                .font(.title2)
-                .bold()
-
-            if let track = playerVM.currentTrack {
-                Text(track.title)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-            } else {
-                Text("Drop your FLAC + LRC files here!")
-                    .foregroundColor(.gray)
-            }
-
-            HStack(spacing: 30) {
-                Button("🎶 Load Track") {
-                    openFile()
-                }
-
-                Button(playerVM.isPlaying ? "⏸ Pause" : "▶️ Play") {
-                    playerVM.isPlaying ? playerVM.pause() : playerVM.play()
-                }
-
-                Button("📝 Load LRC File") {
-                    openLRC()
+        NavigationSplitView {
+            // Sidebar
+            List(SidebarItem.allCases, selection: $selection) { item in
+                NavigationLink(value: item) {
+                    Label(item.label, systemImage: item.systemImage)
                 }
             }
-
-            ProgressView(value: playerVM.currentTime, total: playerVM.duration)
-                .padding(.horizontal)
-
-            LyricsView(viewModel: lyricsVM)
+            .listStyle(SidebarListStyle())
+            .frame(minWidth: 180)
+        } detail: {
+            // Main Content
+            Group {
+                switch selection {
+                case .songs:
+                    SongListView(libraryVM: libraryVM, playerVM: playerVM)
+                case .playlists:
+                    PlaylistListView(libraryVM: libraryVM, playerVM: playerVM)
+                case .artists:
+                    ArtistListView(libraryVM: libraryVM, playerVM: playerVM)
+                case .settings:
+                    SettingsView(libraryVM: libraryVM)
+                case .none:
+                    Text("Select a section")
+                }
+            }
         }
-        .frame(width: 500, height: 350)
-        .padding()
+        .frame(minWidth: 800, minHeight: 500)
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: toggleSidebar, label: {
+                    Image(systemName: "sidebar.left")
+                })
+            }
+        }
+        .overlay(alignment: .bottom) {
+            PlayerBarView(playerVM: playerVM, libraryVM: libraryVM)
+                .background(.ultraThinMaterial)
+                .frame(height: 80)
+                .shadow(radius: 4)
+        }
         .onAppear {
-            lyricsVM.bindToPlayer(playerVM)
+            libraryVM.loadLibrary()
         }
+    }
+
+    private func toggleSidebar() {
+        NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
     }
 
     func openFile() {
@@ -61,27 +93,19 @@ struct ContentView: View {
         panel.canChooseDirectories = false
 
         if panel.runModal() == .OK, let audioURL = panel.url {
-            let lyricsURL = audioURL.deletingPathExtension().appendingPathExtension("lrc")
-            let lyricsExists = FileManager.default.fileExists(atPath: lyricsURL.path)
-
-            print("Audio selected: \(audioURL.lastPathComponent)")
-            print("Looking for lyrics at: \(lyricsURL.path)")
-            print("Lyrics file exists: \(lyricsExists)")
-
-            let track = Track(
-                title: audioURL.lastPathComponent,
-                artist: "Unknown",
-                audioURL: audioURL,
-                lyricsURL: lyricsExists ? lyricsURL : nil
-            )
-
-            playerVM.loadTrack(track)
-
-            if let lrcURL = track.lyricsURL {
-                lyricsVM.load(from: lrcURL)
-                print("Lyrics loaded!")
-            } else {
-                print("No lyrics file found.")
+            Task {
+                let track = await Track.from(url: audioURL)
+                await MainActor.run {
+                    playerVM.loadTrack(track)
+                    // Optionally, load lyrics if you want:
+                    let lyricsURL = audioURL.deletingPathExtension().appendingPathExtension("lrc")
+                    if FileManager.default.fileExists(atPath: lyricsURL.path) {
+                        lyricsVM.load(from: lyricsURL)
+                        print("Lyrics loaded!")
+                    } else {
+                        print("No lyrics file found.")
+                    }
+                }
             }
         }
     }
